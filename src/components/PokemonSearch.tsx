@@ -51,6 +51,10 @@ const PokemonSearch: FunctionComponent<User> =
             })
         }
 
+        const addNumber = (a: number, b: number): number => { //it should return a number
+            return a + b
+        }
+
         let resultMarkup;
         if (data?.error) {
             resultMarkup = <p>Pokemon not found!</p>
@@ -72,6 +76,8 @@ const PokemonSearch: FunctionComponent<User> =
             </div>
         )
     }
+
+
 
 
 export default PokemonSearch
