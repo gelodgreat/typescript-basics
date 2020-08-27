@@ -1,4 +1,4 @@
-import uuid from "uuid";
+import {v4 as uuid} from "uuid";
 import { Expense } from "../types/Expenses";
 import {
     ADD_EXPENSE,
@@ -45,7 +45,7 @@ export const startAddExpense = (expenseData: {
         } = expenseData;
         const expense = { description, note, amount, createdAt };
 
-        const id = uuid();
+        const id = uuid()
 
         return dispatch(
             addExpense({

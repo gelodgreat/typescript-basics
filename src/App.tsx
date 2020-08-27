@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import PokemonSearch from './components/PokemonSearch';
+import AppRouter from "./router"
+import { Provider } from 'react-redux';
+import { store } from './redux/store/store';
 
-function App() {
+const App: FunctionComponent = () => {
   return (
-    <div className="App">
-      <PokemonSearch name="Angelo" numberOfPokemons={4} />
-    </div>
+    <Provider store={store}>
+      <AppRouter />
+    </Provider>
   );
 }
 
