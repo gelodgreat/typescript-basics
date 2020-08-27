@@ -1,15 +1,37 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunk, { ThunkMiddleware } from "redux-thunk";
-import { expenseReducer } from "../reducers/expenses";
+import { createBrowserHistory } from 'history';
+import { routerMiddleware } from 'connected-react-router';
+import {
+    applyMiddleware,
+    compose,
+    createStore,
+    StoreEnhancer,
+    Store,
+} from 'redux';
+import {
+    persistReducer,
+    persistStore,
+    PersistConfig,
+    Persistor,
+} from 'redux-persist';
 import { AppActions } from "../types/actions";
+import createSagaMiddleware from 'redux-saga';
+import storage from 'redux-persist/lib/storage';
+import createRootReducer from '../reducers';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-export const rootReducer = combineReducers({
-    expenses: expenseReducer
-});
+export const history = createBrowserHistory();
 
-export type AppState = ReturnType<typeof rootReducer>;
+const persistConfig = {
+    key: 'root',
+    storage,
+    whitelist: ['auth'],
+};
 
-export const store = createStore(
-    rootReducer,
-    applyMiddleware(thunk as ThunkMiddleware<AppState, AppActions>)
-);
+const reducer = persistReducer(persistConfig, createRootReducer(history))
+export const sagaMiddleware = createSagaMiddleware();
+const enhancer = applyMiddleware(sagaMiddleware, routerMiddleware(history))
+
+export const store: Store<any, any> = createStore(reducer, composeWithDevTools(enhancer))
+export const persistor = (callback?: () => void): Persistor => persistStore(store, undefined, callback)
+
+export default store;

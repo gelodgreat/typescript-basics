@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { startEditExpense, startRemoveExpense, startAddExpense } from '../redux/actions/expenses';
 import { Expense } from '../redux/types/Expenses';
-import { AppState } from '../redux/store/store';
+import { Store } from '../redux/store/store';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppActions } from '../redux/types/actions';
 import { bindActionCreators } from 'redux';
